@@ -1,6 +1,5 @@
 import React from 'react';
 import {Form, Input, Button} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
 
 const newUserForm = (props) => {
   return (

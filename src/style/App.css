@@ -1,0 +1,24 @@
+body {
+    font-family: sans-serif;
+}
+
+    #root {
+        padding-bottom: 20px;  
+    }
+
+        section {
+            margin-top: 20px;
+        }
+
+            h1 {
+                text-align: center;
+            }
+
+            .Summary {
+                text-align: left;
+            }
+
+            .UserForm {
+                max-width: 600px;
+                margin: 0 auto;
+            }

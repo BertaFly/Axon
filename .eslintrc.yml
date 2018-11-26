@@ -1,0 +1,69 @@
+parser: babel-eslint
+
+parserOptions:
+  ecmaVersion: 2017
+  sourceType: module
+
+env:
+  browser: true
+  es6: true
+  jest: true
+
+extends:
+  - airbnb
+  - prettier
+  - prettier/react
+
+plugins:
+  - prettier
+
+settings:
+  import/resolver:
+    node:
+      extensions:
+        - .js
+        - .jsx
+
+      moduleDirectory:
+        - node_modules
+        - src
+
+rules:
+  prettier/prettier:
+    - error
+    - printWidth: 80
+      tabWidth: 2
+      useTabs: false
+      semi: true
+      singleQuote: true
+      trailingComma: all
+      bracketSpacing: false
+      jsxBracketSameLine: false
+      arrowParens: avoid
+
+  import/prefer-default-export: off
+
+  no-underscore-dangle: off
+
+  # Allow dev-dependencies in stories and test files
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies:
+      - .storybook/**/*
+      - src/**/*.{story,stories}.{js,jsx}
+      - src/setupTests.js
+      - src/**/*.test.{js,jsx}
+
+  # Workaround for react-router Link
+  jsx-a11y/anchor-is-valid:
+    - error
+    - components:
+      - Link
+      specialLink:
+      - to
+
+  jsx-a11y/click-events-have-key-events: off
+  jsx-a11y/no-noninteractive-element-to-interactive-role: off
+
+  react/no-did-mount-set-state: off
+  prefer-promise-reject-errors: off

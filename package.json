@@ -2,12 +2,10 @@
   "name": "axon-test-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bertafly.github.io/Axon",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "react": "^16.4.1",
@@ -19,12 +17,7 @@
   },
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "concurrently \"node server\" \"react-scripts start\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "eject": "react-scripts eject"
+    "start": "concurrently \"node server\" \"react-scripts start\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

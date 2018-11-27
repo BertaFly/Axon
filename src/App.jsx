@@ -21,9 +21,12 @@ class App extends Component {
     totalUsersFromKiev: 0,
     totalOldestAges: 0,
     longestName: '',
+    windowWidth: 0,
   };
 
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     axios.get('users').then(res => {
       const countKiev = this.countFromKiev(res.data);
       const longestNameSurname = this.findLongestName(res.data);
@@ -36,6 +39,14 @@ class App extends Component {
       });
     });
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({windowWidth: window.innerWidth});
+  };
 
   formatDOB = date => {
     const year = Number(date.substr(6, 4));
@@ -146,15 +157,15 @@ class App extends Component {
     return sortedArr;
   };
 
-  deleteUser = data => () => {
-    const URL = 'users/' + data;
-    const userIndex = this.state.data.findIndex(obj => obj.id === data);
+  deleteUser = id => () => {
+    const URL = 'users/' + id;
+    const userIndex = this.state.data.findIndex(obj => obj.id === id);
     const tableData = [
       ...this.state.data.slice(0, userIndex),
       ...this.state.data.slice(userIndex + 1),
     ];
     axios
-      .delete(URL, {params: {id: data}})
+      .delete(URL, {params: {id: id}})
       .then(r => {
         if (r.status === 200) {
           const countKiev = this.countFromKiev(tableData);
@@ -216,12 +227,27 @@ class App extends Component {
 
   submitNewUser = () => {
     const newUser = {...this.state.newUser};
+    let name = newUser.first_name.toLowerCase();
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    let lastName = newUser.last_name.toLowerCase();
+    if (lastName.includes("'") || lastName.includes('-')) {
+      const index = lastName.includes("'")
+        ? lastName.indexOf("'")
+        : lastName.indexOf('-');
+      lastName =
+        lastName.charAt(0).toUpperCase() +
+        lastName.slice(1, index + 1) +
+        lastName.charAt(index + 1).toUpperCase() +
+        lastName.slice(index + 2);
+    } else {
+      lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+    }
     axios
       .post(
         'users/',
         {
-          "first_name": newUser.first_name,
-          "last_name": newUser.last_name,
+          "first_name": name,
+          "last_name": lastName,
           "dob": newUser.dob,
           "location": newUser.location
         },
@@ -266,6 +292,7 @@ class App extends Component {
             direction={direction}
             sorted={this.handleSort}
             deleteUser={this.deleteUser}
+            width={this.state.windowWidth}
           />
         </section>
         <section>

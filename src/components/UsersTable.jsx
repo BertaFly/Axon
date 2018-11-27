@@ -43,13 +43,17 @@ const usersTable = props => {
             <Table.Cell>{dob}</Table.Cell>
             <Table.Cell>{location}</Table.Cell>
             <Table.Cell>
-              <Button
-                content="Delete"
-                icon="trash alternate"
-                labelPosition="left"
-                onClick={props.deleteUser(id)}
-                fluid
-              />
+              {props.width > 580 ? (
+                <Button
+                  content="Delete"
+                  icon="trash alternate"
+                  labelPosition="left"
+                  onClick={props.deleteUser(id)}
+                  fluid
+                />
+              ) : (
+                <Button icon="trash alternate" onClick={props.deleteUser(id)} />
+              )}
             </Table.Cell>
           </Table.Row>
         ))}
